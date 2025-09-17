@@ -15,10 +15,11 @@ echo 3. 部署指定版本 (上架)
 echo 4. 下架所有檔案
 echo 5. 建立版本備份
 echo 6. 查看版本資訊
-echo 7. 退出
+echo 7. 自動初始化 Git 倉庫
+echo 8. 退出
 echo.
 
-set /p choice=請輸入選項 (1-7): 
+set /p choice=請輸入選項 (1-8): 
 
 if "%choice%"=="1" goto fix_push
 if "%choice%"=="2" goto check_upload
@@ -26,7 +27,8 @@ if "%choice%"=="3" goto deploy_version
 if "%choice%"=="4" goto cleanup_github
 if "%choice%"=="5" goto create_backup
 if "%choice%"=="6" goto show_versions
-if "%choice%"=="7" goto exit
+if "%choice%"=="7" goto auto_init_git
+if "%choice%"=="8" goto exit
 echo 無效選項
 pause
 goto start
@@ -421,6 +423,29 @@ echo 最近提交記錄：
 git log --oneline -5 2>nul
 echo.
 
+pause
+goto start
+
+:auto_init_git
+echo.
+echo ================================
+echo 🚀 自動初始化 Git 倉庫
+echo ================================
+echo.
+
+echo 正在啟動自動化 Git 初始化工具...
+echo.
+
+if exist "auto-init-git.bat" (
+    call auto-init-git.bat
+) else (
+    echo ❌ 找不到 auto-init-git.bat 檔案
+    echo 請確保該檔案存在於當前目錄中
+    echo.
+    pause
+)
+
+echo.
 pause
 goto start
 
